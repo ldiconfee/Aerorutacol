@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AeroRutaCol — Vuelos en Colombia</title>
+
+<style>
+
+    /* FUENTES */
+    body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background: #04040a;
+        color: #e6e6ff;
+        overflow-x: hidden;
+    }
+
+    /* EFECTO DE BRILLO GLOBAL */
+    @keyframes neonPulse {
+        0% { text-shadow: 0 0 8px #00eaff, 0 0 16px #00eaff; }
+        50% { text-shadow: 0 0 18px #00eaff, 0 0 30px #00eaff; }
+        100% { text-shadow: 0 0 8px #00eaff, 0 0 16px #00eaff; }
+    }
+
+    /* NAV */
+    nav {
+        display: flex;
+        justify-content: space-between;
+        padding: 18px 50px;
+        background: rgba(10, 10, 25, 0.7);
+        backdrop-filter: blur(10px);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        border-bottom: 1px solid rgba(0,255,255,0.2);
+    }
+
+    .logo {
+        font-size: 26px;
+        font-weight: 800;
+        color: #00eaff;
+        animation: neonPulse 2s infinite ease-in-out;
+    }
+
+    nav a {
+        margin-left: 25px;
+        color: #d0d0ff;
+        text-decoration: none;
+        font-weight: 500;
+        transition: .2s;
+    }
+
+    nav a:hover {
+        color: #00eaff;
+    }
+
+    nav .btn {
+        background: #00eaff;
+        padding: 10px 18px;
+        border-radius: 30px;
+        color: #00141a !important;
+        font-weight: 600;
+        margin-left: 25px;
+        box-shadow: 0 0 15px #00eaff;
+    }
+
+    /* HERO */
+    .hero {
+        padding: 120px 50px;
+        display: flex;
+        max-width: 1200px;
+        margin: auto;
+        align-items: center;
+        justify-content: space-between;
+        gap: 50px;
+        animation: fadeIn 1.5s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(40px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+        font-size: 50px;
+        color: #ffffff;
+    }
+
+    h1 span {
+        color: #00eaff;
+        text-shadow: 0 0 20px #00eaff;
+    }
+
+    .hero p {
+        margin-top: 12px;
+        font-size: 18px;
+        color: #b0b0d9;
+        max-width: 500px;
+    }
+
+    /* BOTONES HERO */
+    .btn-group {
+        margin-top: 30px;
+        display: flex;
+        gap: 20px;
+    }
+
+    .btn-main,
+    .btn-sec {
+        padding: 16px 30px;
+        border: none;
+        cursor: pointer;
+        font-size: 17px;
+        font-weight: 600;
+        border-radius: 12px;
+        transition: 0.2s;
+    }
+
+    .btn-main {
+        background: #00eaff;
+        color: #00141a;
+        box-shadow: 0 0 20px #00eaff;
+    }
+
+    .btn-sec {
+        background: transparent;
+        border: 2px solid #9b4dff;
+        color: #b277ff;
+        box-shadow: 0 0 15px #9b4dff;
+    }
+
+    .btn-main:hover { transform: translateY(-4px); }
+    .btn-sec:hover { transform: translateY(-4px); }
+
+    /* TARJETA HERO */
+    .hero-card {
+        width: 360px;
+        background: rgba(255,255,255,0.03);
+        padding: 40px;
+        border-radius: 20px;
+        backdrop-filter: blur(10px);
+        text-align: center;
+        border: 1px solid rgba(0,255,255,0.2);
+        box-shadow: 0 0 20px rgba(0,255,255,0.2);
+        animation: cardFloat 4s infinite ease-in-out;
+    }
+
+    @keyframes cardFloat {
+        0% { transform: translateY(0); }
+        50% { transform: translateY(-12px); }
+        100% { transform: translateY(0); }
+    }
+
+    .hero-card img {
+        width: 95px;
+        filter: drop-shadow(0 0 12px #00eaff);
+    }
+
+    /* SECCIONES */
+    .section {
+        padding: 70px 50px;
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    .section h2 {
+        text-align: center;
+        font-size: 36px;
+        color: #00eaff;
+        text-shadow: 0 0 20px #00eaff;
+        animation: neonPulse 2s infinite ease-in-out;
+    }
+
+    /* CÓMO FUNCIONA */
+    .steps {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
+        margin-top: 40px;
+    }
+
+    .step {
+        padding: 25px;
+        border-radius: 20px;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(155,77,255,0.3);
+        box-shadow: 0 0 20px rgba(155,77,255,0.3);
+        transition: 0.2s;
+    }
+
+    .step:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 0 35px rgba(155,77,255,0.6);
+    }
+
+    .step h3 {
+        color: #9b4dff;
+        text-shadow: 0 0 12px #9b4dff;
+    }
+
+    /* DESTINOS */
+    .destinos {
+        margin-top: 40px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+    }
+
+    .destino {
+        padding: 25px;
+        background: rgba(255,255,255,0.03);
+        border-radius: 20px;
+        border: 1px solid rgba(0,255,180,0.3);
+        box-shadow: 0 0 20px rgba(0,255,180,0.3);
+        transition: 0.2s;
+    }
+
+    .destino:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 0 30px rgba(0,255,180,0.6);
+    }
+
+    .dest-header {
+        display: flex;
+        justify-content: space-between;
+        font-size: 20px;
+        color: #00ffbb;
+        text-shadow: 0 0 12px #00ffbb;
+    }
+
+    .destino p {
+        color: #b0b0d9;
+    }
+
+    .label {
+        margin-top: 8px;
+        color: #00ffbb;
+    }
+
+    /* POR QUÉ */
+    .why {
+        margin-top: 40px;
+        background: rgba(255,255,255,0.03);
+        padding: 40px;
+        border-radius: 20px;
+        text-align: center;
+        border: 1px solid rgba(0,255,255,0.25);
+        box-shadow: 0 0 25px rgba(0,255,255,0.3);
+    }
+
+    /* FOOTER */
+    footer {
+        margin-top: 80px;
+        padding: 40px;
+        background: #02020b;
+        color: #8aa0c9;
+        text-align: center;
+        font-size: 15px;
+        border-top: 1px solid rgba(0,255,255,0.2);
+    }
+
+    @media(max-width: 900px) {
+        .hero {
+            flex-direction: column;
+            text-align: center;
+        }
+        .steps, .destinos {
+            grid-template-columns: 1fr;
+        }
+    }
+
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+<nav>
+    <div class="logo">AeroRutaCol</div>
+    <div>
+        <a href="#">Inicio</a>
+        <a href="#">Cómo funciona</a>
+        <a href="#">Destinos</a>
+        <a href="#" class="btn">Ofertas</a>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+
+    <div>
+        <h1>Vuela dentro de Colombia<br> con <span>AeroRutaCol</span></h1>
+        <p>Reserva vuelos nacionales desde cualquier país con un estilo futurista, pagos seguros y soporte humano.</p>
+
+        <div class="btn-group">
+            <button class="btn-main">Buscar vuelos</button>
+            <button class="btn-sec">Ver ofertas</button>
+        </div>
+    </div>
+
+    <div class="hero-card">
+        <img src="https://cdn-icons-png.flaticon.com/512/201/201623.png">
+        <p>Conectamos viajeros globales con rutas nacionales dentro de Colombia.</p>
+    </div>
+
+</section>
+
+<!-- CÓMO FUNCIONA -->
+<section class="section">
+    <h2>¿Cómo funciona?</h2>
+
+    <div class="steps">
+
+        <div class="step">
+            <h3>1. Cuéntanos tu viaje</h3>
+            <p>Origen, destino, fechas y pasajeros.</p>
+        </div>
+
+        <div class="step">
+            <h3>2. Te enviamos tarifas</h3>
+            <p>Las mejores aerolíneas nacionales con precios claros.</p>
+        </div>
+
+        <div class="step">
+            <h3>3. Pagas desde cualquier país</h3>
+            <p>Métodos internacionales y locales.</p>
+        </div>
+
+    </div>
+</section>
+
+<!-- DESTINOS -->
+<section class="section">
+    <h2>Destinos destacados</h2>
+
+    <div class="destinos">
+
+        <div class="destino">
+            <div class="dest-header">
+                <span>Bogotá → Medellín</span>
+                <span>COP 190.000</span>
+            </div>
+            <p>Ruta ideal para negocios, estudio y conexiones rápidas.</p>
+            <div class="label">🏢 Corporativo</div>
+        </div>
+
+        <div class="destino">
+            <div class="dest-header">
+                <span>Bogotá → Cartagena</span>
+                <span>COP 270.000</span>
+            </div>
+            <p>Destino turístico perfecto en el Caribe colombiano.</p>
+            <div class="label">🏖️ Vacaciones</div>
+        </div>
+
+        <div class="destino">
+            <div class="dest-header">
+                <span>Medellín → San Andrés</span>
+                <span>COP 420.000</span>
+            </div>
+            <p>Playas cristalinas y descanso total.</p>
+            <div class="label">🌴 Playa</div>
+        </div>
+
+        <div class="destino">
+            <div class="dest-header">
+                <span>Cali → Bogotá</span>
+                <span>COP 200.000</span>
+            </div>
+            <p>Conexiones para trámites, estudio y trabajo.</p>
+            <div class="label">📅 Flexible</div>
+        </div>
+
+    </div>
+</section>
+
+<section class="section">
+    <h2>¿Por qué elegirnos?</h2>
+
+    <div class="why">
+        Somos la plataforma más futurista y segura para vuelos dentro de Colombia.  
+        Tarifas claras, métodos de pago globales y soporte real todos los días.
+    </div>
+</section>
+
+<footer>
+    © 2025 AeroRutaCol — Plataforma futurista de vuelos nacionales.
+</footer>
+
+</body>
+</html>
